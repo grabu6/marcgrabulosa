@@ -6,7 +6,7 @@ if(isset($_POST['register'])){
         $nom= trim($_POST['name']);
         $correu= trim($_POST['email']);
         $password=md5(trim($_POST['password']));
-        $consulta=$connexio->prepare("INSERT INTO comptes(nom, email, contrasenya) VALUES (?,?,?)");
+        $consulta=$connexio->prepare("INSERT INTO identificats(nom, email, contrasenya) VALUES (?,?,?)");
         $consulta->execute(array($nom,$correu,$password));
 
         if($consulta){
