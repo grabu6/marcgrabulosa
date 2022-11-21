@@ -1,3 +1,16 @@
+<?php
+try {
+    $hostname = "localhost";
+    $dbname = "admin";
+    $username = "dwes-user";
+    $pw = "dwes-pass";
+    $connexio = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
+  } catch (PDOException $e) {
+    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+    exit;
+  }
+    
+  ?>
 <!DOCTYPE html>
 <html lang="ca">
 <head>
