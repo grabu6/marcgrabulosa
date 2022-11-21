@@ -9,7 +9,36 @@ try {
     echo "Failed to get DB handle: " . $e->getMessage() . "\n";
     exit;
   }
+
+  if(isset($_POST['register'])){
+    if(strlen($_POST["name"])>= 1 && strlen($_POST["password"])>= 1){
+        $nom= trim($_POST['name']);
+        $password=md5(trim($_POST['password']));
+        $consulta1=$connexio->prepare("SELECT nom, contrasenya FROM compte");
+        $consulta1-> execute();
+
+        foreach($consulta1 as $row){
+
+            if($row['nom']==$_POST['name']){
+                ?>
+                <h3>Error! Usuari ja introduit !!!</h3>
+                <?php
+            }else{
+                $consulta2=$connexio->prepare("INSERT INTO compte(nom, contrasenya) VALUES (?,?)");
+                $consulta2->execute(array($nom,$password));
+                ?>
+                <h3>T'has inscrit correctament!</h3>
     
+                <?php
+            } 
+        }
+     } else{
+        ?>
+        <h3>Completi els camps correctament!</h3>
+        <?php
+    }
+}
+?>
   ?>
 <!DOCTYPE html>
 <html lang="ca">
@@ -38,10 +67,10 @@ try {
         </div>
         <div class="admin-row">
             <h1> Nou usuari: </h1>
-            <form>
-                <input type="text" placeholder="Nom">
-                <input type="password" placeholder="Contrassenya">
-                <input type="button" value="Crea usuari">
+            <form method="post">
+                <input type="text" name="name" placeholder="Nom">
+                <input type="password" name="password" placeholder="Contrassenya">
+                <input type="button" name="register" value="Crea usuari">
             </form>
         </div>
         <div class="admin-row">
